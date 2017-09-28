@@ -1,0 +1,107 @@
+﻿@model FizzleBizzle.Models.IndexViewModel
+
+<div class="container-fluid fizzlebizzle">
+    <div class="row">
+        <div class="col-lg-12">          
+            <div class="page-header fizzlebizzle">
+                <h1 class="h1-fizzlebizzle">Fizzle Bizzle Test</h1>
+            </div>
+            <h3 class="for-engagency">For Engagency</h3>           
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="fizzlebizzle-text">
+                <b>FizzBuzz</b> generates an array of strings representing the consecutive sequence of integers from start to end. 
+                When the integer is a multiple of Fizz, the string "Fizz" is added instead. Likewise, for multiples of Buzz, "Buzz" 
+                is added. For multiples of both Fizz and Buzz, "FizzBuzz" is added.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well well-sm example">
+                <h4><strong>For example:</strong></h4>
+                <p>With Fizz = 3, Buzz = 5, start = 1, and end = 15; the array looks like: ["1","2","Fizz","4","Buzz","Fizz","7","8", ... ,"14","FizzBuzz"]</p>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">   
+        @using (Html.BeginForm("Index", "Home"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <form class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor( x => x.Start, new { @class= "form-control fizzlebizzle", placeholder = "Start" })
+                        @Html.ValidationMessageFor(x => x.Start, String.Empty, new { @class = "fizzlebizzle-validation" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(x => x.End, new { @class = "form-control fizzlebizzle", placeholder = "End" })
+                        @Html.ValidationMessageFor(x => x.End, String.Empty, new { @class = "fizzlebizzle-validation" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(x => x.Fizz, new { @class = "form-control fizzlebizzle", placeholder = "Fizz" })
+                        @Html.ValidationMessageFor(x => x.Fizz, String.Empty, new { @class = "fizzlebizzle-validation" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(x => x.Buzz, new { @class = "form-control fizzlebizzle", placeholder = "Buzz" })
+                        @Html.ValidationMessageFor(x => x.Buzz, String.Empty, new { @class = "fizzlebizzle-validation" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">  
+                        @Html.CheckBoxFor(x => x.IsBazzActive, new { @id = "bazz-toggle", data_toggle = "toggle", data_style = "fizzlebizzle", data_onstyle = "fizzlebizzle" })<text class="enable-bazz-text">Enable Bazz?</text>                      
+                    </div>
+                    <div class="col-sm-6 hide" id="bazz-input">         
+                        @Html.TextBoxFor(x => x.Bazz, new { @class = "form-control fizzlebizzle", placeholder = "Bazz" })
+                        @Html.ValidationMessageFor(x => x.Bazz, String.Empty, new { @class = "fizzlebizzle-validation" })
+                    </div>
+                </div>
+                <div class="row hide" id="bazz-predicate">
+                    <div class="col-sm-6">
+                        @Html.EnumDropDownListFor(x => x.Predicate, "Predicate", new { @class = "selectpicker", data_style = "form-control fizzlebizzle" })
+                        @Html.ValidationMessageFor(x => x.Predicate, String.Empty, new { @class = "fizzlebizzle-validation" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="btn fizzlebizzle-generate btn-block" type="submit">Generate</button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+    @if (Model != null)
+    {
+        if (Model.FizzBuzzArray.Length != 0)
+        {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well well-sm example">
+                    @{
+                        var arrayString = "[";
+                        for (int i = 0; i < Model.FizzBuzzArray.Length; i++)
+                        {
+                            arrayString += $"\"{Model.FizzBuzzArray[i]}\"";
+                            if (i != Model.FizzBuzzArray.Length - 1)
+                            {
+                                arrayString += ",";
+                            }
+                        }
+                        arrayString += "]";
+                        <p>@arrayString</p>
+                    }
+                </div>
+            </div>          
+        </div>
+        }
+    }
+</div>
+
+
+    
+
